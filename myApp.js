@@ -9,19 +9,25 @@ mongoose
    .then(() => console.log("Connected to MongoDB!"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-
-// let Person;
-const personSchema = new mongoose.Schema({
+const personSchema = new Schema({
   name: { type: String, required: true },
   age: Number,
-  favoriteFoods: [String]
+  favoriteFoods: [String],
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const newPerson = new Person({
+    name: "Candice",
+    age: 43,
+    favoriteFoods: ["chicken", "limes"]
+  });
+  newPerson.save()
+    .then((person) => done(null, person))
+    .catch((err) => done(err));
 };
+
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
